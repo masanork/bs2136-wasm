@@ -12,7 +12,7 @@
     <div>
         <label>Enter Integer:</label>
         <input type="number" id="integerInput">
-        <button onclick="encodeInteger()">Encode Integer</button>
+        <button id="encodeIntegerButton">Encode Integer</button>
         <p>Encoded Result: <span id="encodedInteger"></span></p>
     </div>
 
@@ -20,7 +20,7 @@
     <div>
         <label>Enter Encoded String:</label>
         <input type="text" id="encodedIntegerInput">
-        <button onclick="decodeInteger()">Decode Integer</button>
+        <button id="decodeIntegerButton">Decode Integer</button>
         <p>Decoded Result: <span id="decodedInteger"></span></p>
     </div>
 
@@ -28,7 +28,7 @@
     <div>
         <label>Enter ByteStream (as string):</label>
         <input type="text" id="byteStreamInput">
-        <button onclick="encodeByteStream()">Encode ByteStream</button>
+        <button id="encodeByteStreamButton">Encode ByteStream</button>
         <p>Encoded Result: <span id="encodedByteStream"></span></p>
     </div>
 
@@ -36,7 +36,7 @@
     <div>
         <label>Enter Encoded ByteStream:</label>
         <input type="text" id="encodedByteStreamInput">
-        <button onclick="decodeByteStream()">Decode ByteStream</button>
+        <button id="decodeByteStreamButton">Decode ByteStream</button>
         <p>Decoded Result (as string): <span id="decodedByteStream"></span></p>
     </div>
 
@@ -44,44 +44,42 @@
     <script type="module">
         import init, { encode_integer_for_wasm, decode_integer_for_wasm, encode_bytestream_for_wasm, decode_bytestream_for_wasm } from './pkg/bs2136_wasm.js';
 
+        document.getElementById("encodeIntegerButton").addEventListener("click", encodeInteger);
+        document.getElementById("decodeIntegerButton").addEventListener("click", decodeInteger);
+        document.getElementById("encodeByteStreamButton").addEventListener("click", encodeByteStream);
+        document.getElementById("decodeByteStreamButton").addEventListener("click", decodeByteStream);
+
         async function runWasm() {
-    await init();
-}
+            await init();
+        }
 
-function encodeInteger() {
-    const input = document.getElementById("integerInput").value;
-    const result = encode_integer_for_wasm(Number(input));
-    document.getElementById("encodedInteger").textContent = result;
-}
+        function encodeInteger() {
+            const input = document.getElementById("integerInput").value;
+            const result = encode_integer_for_wasm(Number(input));
+            document.getElementById("encodedInteger").textContent = result;
+        }
 
-function decodeInteger() {
-    const input = document.getElementById("encodedIntegerInput").value;
-    const result = decode_integer_for_wasm(input);
-    document.getElementById("decodedInteger").textContent = result;
-}
+        function decodeInteger() {
+            const input = document.getElementById("encodedIntegerInput").value;
+            const result = decode_integer_for_wasm(input);
+            document.getElementById("decodedInteger").textContent = result;
+        }
 
-function encodeByteStream() {
-    const input = document.getElementById("byteStreamInput").value;
-    const bytes = new Uint8Array(input.split("").map(ch => ch.charCodeAt(0)));
-    const result = encode_bytestream_for_wasm(bytes);
-    document.getElementById("encodedByteStream").textContent = result;
-}
+        function encodeByteStream() {
+            const input = document.getElementById("byteStreamInput").value;
+            const bytes = new Uint8Array(input.split("").map(ch => ch.charCodeAt(0)));
+            const result = encode_bytestream_for_wasm(bytes);
+            document.getElementById("encodedByteStream").textContent = result;
+        }
 
-function decodeByteStream() {
-    const input = document.getElementById("encodedByteStreamInput").value;
-    const bytes = decode_bytestream_for_wasm(input);
-    const result = String.fromCharCode(...bytes);
-    document.getElementById("decodedByteStream").textContent = result;
-}
+        function decodeByteStream() {
+            const input = document.getElementById("encodedByteStreamInput").value;
+            const bytes = decode_bytestream_for_wasm(input);
+            const result = String.fromCharCode(...bytes);
+            document.getElementById("decodedByteStream").textContent = result;
+        }
 
-// Attach functions to the window object to make them globally accessible
-window.encodeInteger = encodeInteger;
-window.decodeInteger = decodeInteger;
-window.encodeByteStream = encodeByteStream;
-window.decodeByteStream = decodeByteStream;
-
-runWasm();
-
+        runWasm();
     </script>
 </body>
 </html>
