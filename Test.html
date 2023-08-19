@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BS2136 Encoder/Decoder</title>
+    <script type="module">
+        import init, { encode_to_kanji, decode_from_kanji } from './pkg/bs2136_wasm.js';
+
+        async function runWasm() {
+            await init();
+
+            document.getElementById("encode").addEventListener("click", function() {
+                if (document.getElementById("modeBytes").checked) {
+                    const input = new TextEncoder().encode(document.getElementById("inputText").value);
+                    const result = encode_to_kanji(input);
+                    document.getElementById("outputText").value = result;
+                } else {
+                    const number = BigInt(document.getElementById("inputText").value);
+                    const result = encode_to_kanji(new Uint8Array(number.toString(16).match(/.{1,2}/g).map(byte => parseInt(byte, 16))));
+                    document.getElementById("outputText").value = result;
+                }
+            });
+
+            document.getElementById("decode").addEventListener("click", function() {
+                const input = document.getElementById("inputText").value;
+                const resultBytes = decode_from_kanji(input);
+                if (document.getElementById("modeBytes").checked) {
+                    const result = new TextDecoder().decode(resultBytes);
+                    document.getElementById("outputText").value = result;
+                } else {
+                    const number = resultBytes.reduce((acc, val) => acc * 256n + BigInt(val), 0n);
+                    document.getElementById("outputText").value = number.toString();
+                }
+            });
+        }
+
+        runWasm();
+    </script>
+</head>
+<body>
+    <h1>BS2136 Encoder/Decoder</h1>
+    <label><input type="radio" name="mode" id="modeBytes" checked> Byte Stream Mode</label>
+    <label><input type="radio" name="mode" id="modeInt"> Integer Mode</label><br><br>
+    <textarea id="inputText" rows="5" cols="50" placeholder="Enter text or kanji here..."></textarea><br><br>
+    <button id="encode">Encode</button>
+    <button id="decode">Decode</button><br><br>
+    <textarea id="outputText" rows="5" cols="50" placeholder="Output will appear here..."></textarea>
+</body>
+</html>

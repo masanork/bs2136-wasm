@@ -1,0 +1,14 @@
+{
+  "name": "bs2136-wasm",
+  "version": "0.1.0",
+  "files": [
+    "bs2136_wasm_bg.wasm",
+    "bs2136_wasm.js",
+    "bs2136_wasm.d.ts"
+  ],
+  "module": "bs2136_wasm.js",
+  "types": "bs2136_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
