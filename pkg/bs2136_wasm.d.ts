@@ -6,10 +6,10 @@
 */
 export function encode_integer(n: bigint): string;
 /**
-* @param {string} encoded
+* @param {string} kanji_str
 * @returns {bigint}
 */
-export function decode_integer(encoded: string): bigint;
+export function decode_integer(kanji_str: string): bigint;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 

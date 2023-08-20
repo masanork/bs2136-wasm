@@ -102,11 +102,11 @@ function passStringToWasm0(arg, malloc, realloc) {
     return ptr;
 }
 /**
-* @param {string} encoded
+* @param {string} kanji_str
 * @returns {bigint}
 */
-export function decode_integer(encoded) {
-    const ptr0 = passStringToWasm0(encoded, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+export function decode_integer(kanji_str) {
+    const ptr0 = passStringToWasm0(kanji_str, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
     const len0 = WASM_VECTOR_LEN;
     const ret = wasm.decode_integer(ptr0, len0);
     return BigInt.asUintN(64, ret);
