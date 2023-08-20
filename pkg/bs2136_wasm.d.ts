@@ -7,9 +7,9 @@
 export function encode_integer(n: bigint): string;
 /**
 * @param {string} kanji_str
-* @returns {string}
+* @returns {bigint}
 */
-export function decode_integer(kanji_str: string): string;
+export function decode_integer(kanji_str: string): bigint;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 

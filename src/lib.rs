@@ -23,18 +23,18 @@ pub fn encode_integer(n: u64) -> String {
 }
 
 #[wasm_bindgen]
-pub fn decode_integer(kanji_str: &str) -> String {
+pub fn decode_integer(kanji_str: &str) -> Result<u64, JsValue> {
     if kanji_str.len() != 4 {
-        return "error".to_string();
+        return Err(JsValue::from_str("error"));
     }
 
     let kanji_chars: Vec<char> = JOYOKANJI.chars().collect();
     let mut result = 0u64;
 
     for kanji in kanji_str.chars() {
-        let index = kanji_chars.iter().position(|&c| c == kanji).expect("Kanji not found!");
+        let index = kanji_chars.iter().position(|&c| c == kanji).ok_or_else(|| JsValue::from_str("Kanji not found!"))?;
         result = result * 2136 + index as u64;
     }
 
-    result.to_string()
+    Ok(result)
 }
