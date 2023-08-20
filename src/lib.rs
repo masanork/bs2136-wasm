@@ -108,13 +108,15 @@ fn decode_bytestream(encoded: &str) -> Vec<u8> {
 }
 
 #[wasm_bindgen]
-pub fn encode_integer_for_wasm(n: u64) -> String {
-    encode_integer(n)
+pub fn encode_integer_for_wasm(n: &str) -> String {
+    let number = n.parse::<u64>().unwrap_or(0);
+    encode_integer(number)
 }
 
 #[wasm_bindgen]
-pub fn decode_integer_for_wasm(encoded: &str) -> u64 {
-    decode_integer(encoded)
+pub fn decode_integer_for_wasm(encoded: &str) -> String {
+    let result = decode_integer(encoded);
+    result.to_string()
 }
 
 #[wasm_bindgen]

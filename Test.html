@@ -9,8 +9,8 @@
 
         async function runWasm() {
             const wasm = await init();
-            // ここでWASM関数を呼び出す
-            console.log(wasm.encode_integer_for_wasm(123456789));
+            const number = 123456789n; // BigIntの使用
+            console.log(wasm.encode_integer_for_wasm(number.toString())); 
         }
 
         runWasm();

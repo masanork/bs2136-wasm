@@ -1,15 +1,15 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
-* @param {bigint} n
+* @param {string} n
 * @returns {string}
 */
-export function encode_integer_for_wasm(n: bigint): string;
+export function encode_integer_for_wasm(n: string): string;
 /**
 * @param {string} encoded
-* @returns {bigint}
+* @returns {string}
 */
-export function decode_integer_for_wasm(encoded: string): bigint;
+export function decode_integer_for_wasm(encoded: string): string;
 /**
 * @param {Uint8Array} input
 * @returns {string}
@@ -25,14 +25,14 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
-  readonly encode_integer_for_wasm: (a: number, b: number) => void;
-  readonly decode_integer_for_wasm: (a: number, b: number) => number;
+  readonly encode_integer_for_wasm: (a: number, b: number, c: number) => void;
+  readonly decode_integer_for_wasm: (a: number, b: number, c: number) => void;
   readonly encode_bytestream_for_wasm: (a: number, b: number, c: number) => void;
   readonly decode_bytestream_for_wasm: (a: number, b: number, c: number) => void;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
-  readonly __wbindgen_free: (a: number, b: number, c: number) => void;
   readonly __wbindgen_malloc: (a: number, b: number) => number;
   readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
+  readonly __wbindgen_free: (a: number, b: number, c: number) => void;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;
