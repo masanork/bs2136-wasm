@@ -103,13 +103,25 @@ function passStringToWasm0(arg, malloc, realloc) {
 }
 /**
 * @param {string} kanji_str
-* @returns {bigint}
+* @returns {string}
 */
 export function decode_integer(kanji_str) {
-    const ptr0 = passStringToWasm0(kanji_str, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-    const len0 = WASM_VECTOR_LEN;
-    const ret = wasm.decode_integer(ptr0, len0);
-    return BigInt.asUintN(64, ret);
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passStringToWasm0(kanji_str, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.decode_integer(retptr, ptr0, len0);
+        var r0 = getInt32Memory0()[retptr / 4 + 0];
+        var r1 = getInt32Memory0()[retptr / 4 + 1];
+        deferred2_0 = r0;
+        deferred2_1 = r1;
+        return getStringFromWasm0(r0, r1);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
 }
 
 async function __wbg_load(module, imports) {

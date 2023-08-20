@@ -7,16 +7,16 @@
 export function encode_integer(n: bigint): string;
 /**
 * @param {string} kanji_str
-* @returns {bigint}
+* @returns {string}
 */
-export function decode_integer(kanji_str: string): bigint;
+export function decode_integer(kanji_str: string): string;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly encode_integer: (a: number, b: number) => void;
-  readonly decode_integer: (a: number, b: number) => number;
+  readonly decode_integer: (a: number, b: number, c: number) => void;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
   readonly __wbindgen_free: (a: number, b: number, c: number) => void;
   readonly __wbindgen_malloc: (a: number, b: number) => number;

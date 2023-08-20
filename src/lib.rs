@@ -23,7 +23,11 @@ pub fn encode_integer(n: u64) -> String {
 }
 
 #[wasm_bindgen]
-pub fn decode_integer(kanji_str: &str) -> u64 {
+pub fn decode_integer(kanji_str: &str) -> String {
+    if kanji_str.len() != 4 {
+        return "error".to_string();
+    }
+
     let kanji_chars: Vec<char> = JOYOKANJI.chars().collect();
     let mut result = 0u64;
 
@@ -32,5 +36,5 @@ pub fn decode_integer(kanji_str: &str) -> u64 {
         result = result * 2136 + index as u64;
     }
 
-    result
+    result.to_string()
 }
